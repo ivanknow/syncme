@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Eleve - Exemplo</title>
+<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"module_example/Listener.php" ,
+		data:"opt=SAY_HI", 
+		success: function(response) {
+			alert(response.msg);
+		}
+	});
+	
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"module_example/Listener.php" ,
+		data:"opt=SAY_HELLO&name=Ivan", 
+		success: function(response) {
+			alert(response.msg);
+		}
+	});
+
+</script>
+</body>
+</html>

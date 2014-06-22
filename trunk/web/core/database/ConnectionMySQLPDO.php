@@ -1,11 +1,11 @@
 <?php
-class ConnectionMysql extends AbstractConnection
+class ConnectionMySQLPDO extends AbstractConnection
 {
 	/*A seguir se encontram os paramatros que sao usados para fazer a conexao com o Mysql*/
 	private $user = "root";
 	private $password = "";
 	private $host = "localhost";
-	private $database = "example_eleve";
+	private $database = "syncme";
 	private $conn = null;
 	
 	/*Essa variavel guarda as consultas que servico feitas no banco*/

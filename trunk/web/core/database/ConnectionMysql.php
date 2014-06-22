@@ -5,7 +5,7 @@ class ConnectionMysql extends AbstractConnection
 	private $user = "root";
 	private $password = "";
 	private $host = "localhost";
-	private $database = "example_eleve";
+	private $database = "syncme";
 
 	/*Essa variavel guarda as consultas que servico feitas no banco*/
 	private $query = "";

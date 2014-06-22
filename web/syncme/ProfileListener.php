@@ -12,7 +12,7 @@ function __autoload($classe){
 }
 
 if(!isset($_REQUEST['opt'])){
-	die("{error:1,msgError:Acesso Indevido}");
+	die("{\"error\":1,\"msgError\":\"Acesso Indevido\"}");
 
 }else{
 

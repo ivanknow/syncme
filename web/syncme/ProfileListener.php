@@ -17,14 +17,14 @@ if(!isset($_REQUEST['opt'])){
 }else{
 
 	$entrada = $_REQUEST;
-	$fachada = new ExampleFacade();
+	$fachada = new ProfileFacade();
 	try {
 		echo json_encode($conf->callMethod($entrada, $fachada));
 
 	} catch (Exception $e) {
 		$msg = $e->getMessage();
 
-		echo "{error:1,msgError:$msg}";
+		echo "{\"error\":1,\"msgError\":\"$msg\"}";
 
 	}
 

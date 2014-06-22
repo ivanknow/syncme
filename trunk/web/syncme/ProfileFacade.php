@@ -1,25 +1,37 @@
 <?php
-class ExampleFacade extends AbstractFacade {
+class ProfileFacade extends AbstractFacade {
 	public function __construct() {
 		parent::__construct ();
-		$this->setController ( new ExampleController () );
+		$this->setController ( new ProfileController());
 	}
-	public function SAY_HI($array) {
+	public function SIGNUP($array) {
+	
+		$profile = Profile::construct($array);
+		$this->getController()->cadastrar($profile);
+		
+		return array (
+				"msg" => "Sign Up Sucessfully"
+		);
+	}
+	public function LOGIN($array) {
+		
 		return array (
 				"msg" => "Hi" 
 		);
 	}
-	public function SAY_HELLO($array) {
+	
+	public function LOGOUT($array) {
 		return array (
 				"msg" => "Hello," . $array ['name'] 
 		);
 	}
-	public function SAY_HELLO_CONT($array) {
+	
+	public function UPDATE_TEXT($array) {
 		return array (
 				"msg" => $this->getController ()->sayHelloController ( $array ['name'] ) 
 		);
 	}
-	public function INSERIR_PESSOA($array) {
+	public function GET_TEXT($array) {
 		$pessoa = Pessoa::construct ( $array );
 		
 		if ($this->getController ()->inserir ( $pessoa )) {

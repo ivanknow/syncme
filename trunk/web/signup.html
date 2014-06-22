@@ -5,46 +5,38 @@
 <title>Eleve - Exemplo</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <!-- inclusao do css -->
 
 <style type="text/css">
-textarea {  /* position is inherited */
-    left: 0; 
-    top: 0; 
-    right: 0;
-    bottom: 100px;  /* Actually the height of select and input */
-    width: 100%;
-}
-html,body,#main { height:100%; }
-#mainInput { height:90%; resize:none;}
+
+html,body{ height:100%; }
 </style>
 </head>
 <body>
-<div class="well hide" id="main">
-<textarea id="mainInput">
-</textarea>
-</div>
 
 <div class="well" id="login">
-    <form>
+    <form id="target">
     <fieldset>
-    <legend>User</legend>
+    <legend>SIGN UP</legend>
     <label>E-mail</label>
-    <input type="text" placeholder="email">
+    <input type="hidden" id="opt" name="opt" value="SIGNUP">
+    <input type="hidden" id="id" name="id" value="0">
+    <input type="text" placeholder="email" class="required email" id="email" name="email">
     <label>Password</label>
-    <input type="password" placeholder="password">
+    <input type="password" placeholder="password" id="password"  class="required" name="password">
     <div>
     <button type="submit" class="btn">Submit</button>
     </div>
     </fieldset>
+    
     </form>
-    <a href="signup.html">SIGN UP</a>
+    <a href="index.html">BACK TO HOME</a>
 </div>
 
 
 <script type="text/javascript">
-
 var ScreenController = {
 		module:"syncme",
 		listener:"ProfileListener.php",
@@ -74,6 +66,36 @@ var ScreenController = {
 
 		}
 };
+
+$(function(){
+	$( "#target" ).submit(function( event ) {
+		
+		var test = $("#target").valid();
+
+		if(test){
+		$.ajax({
+			type:"POST",
+			dataType:"json",
+			url:ScreenController.module+"/"+ScreenController.listener,
+			data:$('#target').serialize(), 
+			success: function(response) {
+				
+				if(response.error!=0  && response.error!=undefined){
+					alert(response.msgError);
+					
+				}else{
+					alert(response.msg);
+					window.location = "index.html";
+			        }
+			}
+		});
+		}
+		
+		event.preventDefault();
+		});
+});
+
+
 
 ScreenController.init();
 

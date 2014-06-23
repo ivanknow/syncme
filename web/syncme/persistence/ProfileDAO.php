@@ -26,7 +26,7 @@ class ProfileDAO extends AbstractDAO{
 
 	}
 
-	public function criarObjeto($obj){
+	public function criarObjeto($array){
 		return Profile::construct($array);
 	}
 

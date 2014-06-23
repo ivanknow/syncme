@@ -2,9 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Eleve - Exemplo</title>
+<title>Syncme</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <!-- inclusao do css -->
 
@@ -21,24 +22,24 @@ html,body,#main { height:100%; }
 </style>
 </head>
 <body>
-<div class="well hide" id="main">
-<textarea id="mainInput">
-</textarea>
-</div>
-
 <div class="well" id="login">
-    <form>
+    
+    <form id="target">
     <fieldset>
-    <legend>User</legend>
+    <legend>User Login</legend>
     <label>E-mail</label>
-    <input type="text" placeholder="email">
+    <input type="hidden" id="opt" name="opt" value="LOGIN">
+    
+    <input type="text" placeholder="email" class="required email" id="email" name="email">
     <label>Password</label>
-    <input type="password" placeholder="password">
+    <input type="password" placeholder="password" id="password"  class="required" name="password">
     <div>
     <button type="submit" class="btn">Submit</button>
     </div>
     </fieldset>
+    
     </form>
+    
     <a href="signup.html">SIGN UP</a>
 </div>
 
@@ -51,32 +52,39 @@ var ScreenController = {
 		
 		init:function(){
 	
-			/*$.ajax({
-				type:"POST",
-				dataType:"json",
-				url:ScreenController.module+"/"+ScreenController.listener ,
-				data:"opt=SAY_HI", 
-				success: function(response) {
-					
-					alert(response.msg);
-				}
-			});
 			
-			$.ajax({
-				type:"POST",
-				dataType:"json",
-				url:ScreenController.module+"/"+ScreenController.listener,
-				data:"opt=SAY_HELLO&name=Ivan", 
-				success: function(response) {
-					alert(response.msg);
-				}
-			});*/
 
 		}
 };
 
 ScreenController.init();
 
+$(function(){
+	$( "#target" ).submit(function( event ) {
+		
+		var test = $("#target").valid();
+
+		if(test){
+		$.ajax({
+			type:"POST",
+			dataType:"json",
+			url:ScreenController.module+"/"+ScreenController.listener,
+			data:$('#target').serialize(), 
+			success: function(response) {
+				
+				if(response.error!=0  && response.error!=undefined){
+					alert(response.msgError);
+					
+				}else{
+					window.location = "text.html";
+			    }
+			}
+		});
+		}
+		
+		event.preventDefault();
+		});
+});
 	
 </script>
 </body>

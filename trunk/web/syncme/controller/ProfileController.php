@@ -13,6 +13,28 @@ class ProfileController extends AbstractController{
 		return $this->getDao()->inserir($profile);
 
 	}
+	
+	public function login(Profile $profile){
+		
+		$profileBusca = new Profile();
+		
+		$profileBusca->setEmail($profile->getEmail());
+		
+		$profileResult = $this->buscarTodos($profileBusca);
+		
+		if(count($profileResult)==1){ //existe um usuario com aquele email
+			if($profileResult[0]->getPassword() === $profile->getPassword()){
+				return $profileResult[0];	
+			}
+			else{
+				//senha incorreta
+				throw new Exception("Incorrect Password");
+			}
+		}else{//usuario não cadastrado
+			throw new Exception("This email is not registred");
+		}
+	
+	}
 
 	public function atualizar(Profile $profile){
 
@@ -42,6 +64,20 @@ class ProfileController extends AbstractController{
 		}
 		if(trim($profile->getPassword())==""){
 			throw new Exception("Password is a required field");
+		}
+		
+		//Validar unicidade do email
+		$profilePesquisada = new Profile();
+		$profilePesquisada->setEmail($profile->getEmail());
+		
+		$profiles = $this->buscarTodos($profilePesquisada);
+		
+		if(count($profiles)){
+			foreach($profiles as $p){
+				if($p->getId()!=$profile->getId()){
+					throw new Exception("Email in use");
+				}
+			}
 		}
 	}
 	

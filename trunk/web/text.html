@@ -63,6 +63,25 @@ var ScreenController = {
 					}
 				}
 			});
+		},
+		
+		getText:function(){
+			$.ajax({
+				type:"POST",
+				dataType:"json",
+				url:ScreenController.module+"/"+ScreenController.listener,
+				data:"opt=GET_TEXT", 
+				success: function(response) {
+					console.log(JSON.stringify(response));
+					if(response.error!=0  && response.error!=undefined){
+						alert(response.msgError);
+						window.location = "index.html";
+						
+					}else{
+						$("#mainInput").val(response.text);
+					}
+				}
+			});
 		}
 };
 
@@ -70,6 +89,7 @@ ScreenController.init();
 
 $(function(){
 	ScreenController.checkLogin();
+	ScreenController.getText();
 	
 	$(".signout").click(function(){
 		

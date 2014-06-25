@@ -1,16 +1,24 @@
 <?php
 class ProfileController extends AbstractController{
 
+	private $textController;
 
 	public function __construct(){
 		$this->setDao(new ProfileDAO());
+		$this->textController = new TextController();
 	}
-
 
 	public function cadastrar(Profile $profile){
 
 		$this->validarCadastrar($profile);
-		return $this->getDao()->inserir($profile);
+		$retorno = $this->getDao()->inserir($profile);
+		$profile->setId($retorno);
+		$text = new Text();
+		$text->setAuthor($profile);
+		
+		$this->textController->cadastrar($text);
+		
+		return $retorno;
 
 	}
 	

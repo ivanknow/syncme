@@ -1,12 +1,16 @@
 <?php
 class ProfileFacade extends AbstractFacade {
+	
+	private $textController;
 	public function __construct() {
 		parent::__construct ();
 		$this->setController ( new ProfileController());
+		$this->textController = new TextController();
 	}
 	public function SIGNUP($array) {
 	
 		$profile = Profile::construct($array);
+		
 		$this->getController()->cadastrar($profile);
 		
 		return array (
@@ -14,7 +18,7 @@ class ProfileFacade extends AbstractFacade {
 		);
 	}
 	
-	public function CHECK_LOGIN($array) {
+	public function CHECK_LOGIN($array=array()) {
 		session_start();
 		if(isset($_SESSION['user'])){
 			$profile = Profile::construct($_SESSION['user']);
@@ -57,18 +61,20 @@ class ProfileFacade extends AbstractFacade {
 		);
 	}
 	public function GET_TEXT($array) {
-		$pessoa = Pessoa::construct ( $array );
-		
-		if ($this->getController ()->inserir ( $pessoa )) {
-			
-			return array (
-					"msg" => "Inserido com sucesso" 
-			);
-		} else {
-			return array (
-					"msg" => "error" 
-			);
+		$retorno = $this->CHECK_LOGIN();
+		if(!isset($retorno['error'])){
+			$profile = Profile::construct($_SESSION['user']);
+			$text = new Text();
+			$text->setAuthor($profile);
+			$result = $this->textController->buscarTodos($text);
+			$novo = $result[0];
+			return $novo->toArray();
+		}else{
+			throw new Exception("You must login");
 		}
+		
+		
+		
 	}
 }
 ?>

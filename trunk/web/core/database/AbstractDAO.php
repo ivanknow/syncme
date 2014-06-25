@@ -32,7 +32,8 @@ abstract class AbstractDAO{
 
 		$tableName = $this->tableName;
 
-
+		$obj->setId($this->getConn()->getMaxId($this->getTableName())+1);
+		
 		$comando = DMLGenerator::createInsert($tableName,$this->mapear($obj));
 //		echo $comando;
 
@@ -41,7 +42,7 @@ abstract class AbstractDAO{
 		$this->conn->Desconecta();
 
 
-		return true;
+		return $obj->getId();
 
 	}
 
@@ -63,7 +64,7 @@ abstract class AbstractDAO{
 			$this->conn->Desconecta();
 
 		
-		return true;
+		return $obj->getId();
 	}
 
 	public function apagar($obj){
@@ -81,6 +82,8 @@ abstract class AbstractDAO{
 			$this->conn->Conecta();
 			$this->conn->Executa($comando);
 			$this->conn->Desconecta();
+			
+			return $obj->getId();
 
 	}
 
@@ -126,7 +129,7 @@ abstract class AbstractDAO{
 			else{
 				$this->sql->setWhere($this->geraWhere($obj));
 			}
-				
+			
 			$this->conn->Conecta();
             
 			$result = $this->conn->getResultAsVector($this->sql->generateSQL());
@@ -183,7 +186,7 @@ abstract class AbstractDAO{
 		if($this->validarTipo($obj)){
 
 			$arrayWhere = array();
-			$attr = $obj->toArray();
+			$attr = $this->mapear($obj);
 
 			foreach ($attr as $key => $value){
 					

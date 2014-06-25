@@ -68,7 +68,7 @@ class ConnectionMysql extends AbstractConnection
 
 	public function getMaxId($tableName){
 		$this->Conecta();
-		$valor = $this->Consulta("select max(id) max from $tabela");
+		$valor = $this->Consulta("select max(id) max from $tableName");
 		$this->Desconecta();
 		if($valor != 0){
 			$result = mysql_fetch_assoc($valor);

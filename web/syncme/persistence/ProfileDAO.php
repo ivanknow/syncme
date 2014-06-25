@@ -12,7 +12,7 @@ class ProfileDAO extends AbstractDAO{
 
 	public function mapear($obj){
 		$array = $obj->toArray();
-		
+				
 		return $array;
 	}
 

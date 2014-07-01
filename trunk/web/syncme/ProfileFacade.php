@@ -56,9 +56,20 @@ class ProfileFacade extends AbstractFacade {
 	}
 	
 	public function UPDATE_TEXT($array) {
-		return array (
-				"msg" => $this->getController ()->sayHelloController ( $array ['name'] ) 
-		);
+		$retorno = $this->CHECK_LOGIN();
+		if(!isset($retorno['error'])){
+			$profile = Profile::construct($_SESSION['user']);
+			$text = new Text();
+			$text->setAuthor($profile);
+			$text->setText($array['text']);
+			$text->setId($array['id']);
+			$this->textController->atualizar($text);
+			return array("msg"=>"Updated");
+			
+		}else{
+			throw new Exception("You must login");
+		}
+		
 	}
 	public function GET_TEXT($array) {
 		$retorno = $this->CHECK_LOGIN();

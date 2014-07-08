@@ -31,7 +31,7 @@ class ProfileController extends AbstractController{
 		$profileResult = $this->buscarTodos($profileBusca);
 		
 		if(count($profileResult)==1){ //existe um usuario com aquele email
-			if($profileResult[0]->getPassword() === $profile->getPassword()){
+			if($profileResult[0]->getEmail() === $profile->getEmail() && $profileResult[0]->getPassword() === $profile->getPassword()){
 				return $profileResult[0];	
 			}
 			else{

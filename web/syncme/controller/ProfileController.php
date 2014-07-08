@@ -23,6 +23,8 @@ class ProfileController extends AbstractController{
 	}
 	
 	public function login(Profile $profile){
+	
+		$this->validarLogin($profile);
 		
 		$profileBusca = new Profile();
 		
@@ -86,6 +88,16 @@ class ProfileController extends AbstractController{
 					throw new Exception("Email in use");
 				}
 			}
+		}
+	}
+	
+	private function validarLogin(Profile $profile){
+
+		if(trim($profile->getEmail())==""){
+			throw new Exception("Email is a required field");
+		}
+		if(trim($profile->getPassword())==""){
+			throw new Exception("Password is a required field");
 		}
 	}
 	

@@ -41,7 +41,8 @@ class ProfileFacade extends AbstractFacade {
 		$_SESSION['user'] = $this->getController()->login($profile)->toArray();
 		
 		return array (
-				"msg" => "Login Successfull"
+				"msg" => "Login Successfull",
+				"sessionId" => session_id()
 		);
 		
 	}
@@ -56,6 +57,9 @@ class ProfileFacade extends AbstractFacade {
 	}
 	
 	public function UPDATE_TEXT($array) {
+	if(isset($array['sessionId'])){
+		session_id($array['sessionId']);
+	}
 		$retorno = $this->CHECK_LOGIN();
 		if(!isset($retorno['error'])){
 			$profile = Profile::construct($_SESSION['user']);
@@ -72,6 +76,9 @@ class ProfileFacade extends AbstractFacade {
 		
 	}
 	public function GET_TEXT($array=array()) {
+	if(isset($array['sessionId'])){
+		session_id($array['sessionId']);
+	}
 		$retorno = $this->CHECK_LOGIN();
 		if(!isset($retorno['error'])){
 			$profile = Profile::construct($_SESSION['user']);

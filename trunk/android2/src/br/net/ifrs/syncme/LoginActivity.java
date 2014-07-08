@@ -45,7 +45,7 @@ public class LoginActivity extends Activity {
 	}
 
 	class LoginTask extends AsyncTask<String, String, String> {
-		String email, password, result = "...";
+		String email, password, sesionId, result = "...";
 		private Context context;
 		private boolean sucesso;
 
@@ -93,6 +93,7 @@ public class LoginActivity extends Activity {
 				if (json.has("error")) {
 					result = json.getString("msgError");
 				} else {
+					sesionId = json.getString("sessionId");
 					result = json.getString("msg");
 					sucesso = true;
 				}
@@ -103,16 +104,15 @@ public class LoginActivity extends Activity {
 			return null;
 		}
 
-		
 		protected void onPostExecute(String file_url) {
 
 			pDialog.dismiss();
 			Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-			if(sucesso){
-			Intent intent = new Intent(getApplicationContext(),
-					TextActivity.class);
-
-			startActivity(intent);
+			if (sucesso) {
+				Intent intent = new Intent(getApplicationContext(),
+						TextActivity.class);
+				intent.putExtra("sessionId", sesionId);
+				startActivity(intent);
 			}
 		}
 

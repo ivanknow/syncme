@@ -49,6 +49,13 @@
             android:text="@string/btn_lbl_login"
             android:onClick="login" />
 
+        <Button
+            android:id="@+id/btnconfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_settings" 
+            android:onClick="config"/>
+
     </LinearLayout>
 
 </RelativeLayout>

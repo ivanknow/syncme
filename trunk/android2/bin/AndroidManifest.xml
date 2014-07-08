@@ -38,6 +38,15 @@
         <activity
             android:name="br.net.ifrs.syncme.TextActivity"
             android:label="@string/title_activity_text" >
+             <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.net.ifrs.syncme.ConfigActivity"
+            android:label="@string/title_activity_config" >
         </activity>
     </application>
 

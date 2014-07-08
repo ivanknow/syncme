@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -25,17 +26,22 @@ public class TextActivity extends Activity {
 	private EditText text;
 
 	JSONParser jsonParser = new JSONParser();
-	private static String url_create_product = "http://10.0.2.2/syncme/syncme/ProfileListener.php";
+	private String url_server;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_text);
+		SharedPreferences sharedPref = getSharedPreferences("SYNCME", 0);
+
+		url_server = sharedPref.getString("url_server",
+				getString(R.string.url_server));
 		Intent intent2 = getIntent();
 		sessionId = intent2.getStringExtra("sessionId");
 		text = (EditText) findViewById(R.id.mainText);
+
 		getText(null);
-		
+
 	}
 
 	public void logout(View v) {
@@ -59,6 +65,7 @@ public class TextActivity extends Activity {
 
 	class LogoutTask extends AsyncTask<String, String, String> {
 		String result = "...";
+
 		private Context context;
 
 		public void setContext(Context context) {
@@ -84,8 +91,8 @@ public class TextActivity extends Activity {
 
 			params.add(new BasicNameValuePair("opt", "LOGOUT"));
 
-			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-					"POST", params);
+			JSONObject json = jsonParser.makeHttpRequest(url_server, "POST",
+					params);
 
 			try {
 
@@ -137,8 +144,8 @@ public class TextActivity extends Activity {
 			params.add(new BasicNameValuePair("opt", "GET_TEXT"));
 			params.add(new BasicNameValuePair("sessionId", sessionId));
 
-			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-					"POST", params);
+			JSONObject json = jsonParser.makeHttpRequest(url_server, "POST",
+					params);
 
 			try {
 				if (json.has("error")) {
@@ -203,8 +210,8 @@ public class TextActivity extends Activity {
 			params.add(new BasicNameValuePair("text", text.getText().toString()));
 			params.add(new BasicNameValuePair("id", textId + ""));
 
-			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-					"POST", params);
+			JSONObject json = jsonParser.makeHttpRequest(url_server, "POST",
+					params);
 
 			try {
 				if (json.has("error")) {

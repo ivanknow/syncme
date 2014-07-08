@@ -71,7 +71,7 @@ class ProfileFacade extends AbstractFacade {
 		}
 		
 	}
-	public function GET_TEXT($array) {
+	public function GET_TEXT($array=array()) {
 		$retorno = $this->CHECK_LOGIN();
 		if(!isset($retorno['error'])){
 			$profile = Profile::construct($_SESSION['user']);

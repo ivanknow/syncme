@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -21,12 +22,10 @@ public class LoginActivity extends Activity {
 
 	public EditText inputEmail, inputPassword;
 
-	private static final String OPT_LOGIN = "LOGIN";
-	// Progress Dialog
 	private ProgressDialog pDialog;
 
 	JSONParser jsonParser = new JSONParser();
-	private static String url_create_product = "http://10.0.2.2/syncme/syncme/ProfileListener.php";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +33,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		inputEmail = (EditText) findViewById(R.id.editEmail);
 		inputPassword = (EditText) findViewById(R.id.editPassword);
+
 	}
 
 	public void login(View v) {
@@ -43,12 +43,20 @@ public class LoginActivity extends Activity {
 		task.execute();
 
 	}
+	public void config(View v) {
+		Intent intent = new Intent(getApplicationContext(),
+				ConfigActivity.class);
+		
+		startActivity(intent);
+
+	}
 
 	class LoginTask extends AsyncTask<String, String, String> {
 		String email, password, sesionId, result = "...";
 		private Context context;
 		private boolean sucesso;
-
+		private String url_server;
+		
 		public LoginTask(String email, String password) {
 			this.email = email;
 			this.password = password;
@@ -59,9 +67,6 @@ public class LoginActivity extends Activity {
 
 		}
 
-		/**
-		 * Before starting background thread Show Progress Dialog
-		 * */
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -72,23 +77,19 @@ public class LoginActivity extends Activity {
 			pDialog.show();
 		}
 
-		/**
-		 * Creating product
-		 * */
 		protected String doInBackground(String... args) {
 
-			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("email", email));
 			params.add(new BasicNameValuePair("password", password));
-			params.add(new BasicNameValuePair("opt", OPT_LOGIN));
+			params.add(new BasicNameValuePair("opt", "LOGIN"));
 
-			// getting JSON Object
-			// Note that create product url accepts POST method
-			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
-					"POST", params);
+			SharedPreferences sharedPref = getSharedPreferences("SYNCME", 0);
+			
+			url_server = sharedPref.getString("url_server",getString(R.string.url_server));
+			
+			JSONObject json = jsonParser.makeHttpRequest(url_server,"POST", params);
 
-			// check for success tag
 			try {
 				if (json.has("error")) {
 					result = json.getString("msgError");

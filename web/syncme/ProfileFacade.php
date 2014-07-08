@@ -50,7 +50,7 @@ class ProfileFacade extends AbstractFacade {
 		session_start();
 		session_destroy();
 		return array (
-				"msg" => "Login Successfull"
+				"msg" => "Logout Successfull"
 		);
 		
 	}

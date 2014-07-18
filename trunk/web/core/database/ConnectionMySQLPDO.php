@@ -30,13 +30,13 @@ class ConnectionMySQLPDO extends AbstractConnection
 	/*Esse metodo Executa comando sem retorno de dados(insert,delete ou update)*/
 	public function Executa($comando)
 	{
-		return $this->conn->exec($cmd);
+		return $this->conn->exec($comando);
 	}
 	/*Esse metodo eh o responsavel por retornar dados para a aplicacao*/
 	public function Consulta($consulta)
 	{
 		try {
-			$result = $this->conn->query($cmd);
+			$result = $this->conn->query($consulta);
 		} 
 		catch(PDOException $e){
 			throw  $e->getMessage();
@@ -46,11 +46,15 @@ class ConnectionMySQLPDO extends AbstractConnection
 	}
 
 	public function contaRegistros($tabela){
-		$valor = $this->Consulta("select count(*) from $tabela");
-		if($valor != 0){
-			$result = mysql_fetch_assoc($valor);
+		$valor = $this->Consulta("select count(*) count from $tabela");
+		if($valor != null){
+			$result = 0;
+			foreach ($valor as $line) {
+				$result = $line;
+			}
+			
 
-			return $result['count(*)'];
+			return $result['count'];
 		}
 		else{
 			return 0;
@@ -59,10 +63,14 @@ class ConnectionMySQLPDO extends AbstractConnection
 
 	public function getMaxId($tableName){
 		$this->Conecta();
-		$valor = $this->Consulta("select max(id) max from $tabela");
+		$valor = $this->Consulta("select max(id) max from $tableName");
 		$this->Desconecta();
-		if($valor != 0){
-			$result = mysql_fetch_assoc($valor);
+		if($valor != null){
+			$result = 0;
+			foreach ($valor as $line) {
+				$result = $line;
+			}
+			//$result = mysql_fetch_assoc($valor);
 
 			if($result['max']!=null){
 				return $result['max'];
@@ -86,11 +94,11 @@ class ConnectionMySQLPDO extends AbstractConnection
 
 		$busca = $this->Consulta($consulta);
 
-		if($busca != 0){
+		if($busca != null){
 
-			while($result = mysql_fetch_assoc($busca)){
+			foreach($busca as $line){
 
-				$arrayRetorno[] = $result;
+				$arrayRetorno[] = $line;
 					
 			}
 

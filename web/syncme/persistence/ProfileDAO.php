@@ -4,7 +4,7 @@ class ProfileDAO extends AbstractDAO{
 
 		public function __construct(){
 
-		$this->setConn(new ConnectionMysql());
+		$this->setConn(new ConnectionMySQLPDO());
 
 		$this->setTableName("tb_profile");
 

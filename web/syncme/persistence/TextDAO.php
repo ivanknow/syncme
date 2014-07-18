@@ -7,7 +7,7 @@ private $profileDAO;
 	
 		$this->profileDAO = new ProfileDAO();
 				
-		$this->setConn( new ConnectionMysql());
+		$this->setConn( new ConnectionMySQLPDO());
 
 		$this->setTableName("tb_text");
 

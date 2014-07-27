@@ -6,11 +6,6 @@ $module_name = "syncme";
 
 $conf = new ModuleConfig($module_name,array("core"));
 
-function __autoload($classe){
-	$conf = new ModuleConfig("syncme",array("core"));
-	$conf->findClass($classe);
-}
-
 if(!isset($_REQUEST['opt'])){
 	die("{\"error\":1,\"msgError\":\"Acesso Indevido\"}");
 

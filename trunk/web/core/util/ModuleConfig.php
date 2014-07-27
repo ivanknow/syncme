@@ -10,6 +10,8 @@ class ModuleConfig{
 		$this->moduleName = $moduleName;
 		$this->dependences = $dependences;
 		$this->dependences[] = $moduleName;
+		
+		spl_autoload_register(array($this, 'findClass'));
 	}
 
 	function findClass($className){

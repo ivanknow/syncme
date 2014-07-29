@@ -14,7 +14,8 @@
     <string name="action_settings">Settings</string>
      <string name="lblUrlServer">Server:</string>
      <string name="btnSave">Save</string>
-    <string name="url_server">http://10.0.2.2/syncme/syncme/ProfileListener.php</string>
+     <string name="btnShare">Share</string>
+    <string name="url_server">http://syncme.comuf.com/syncme/ProfileListener.php</string>
     <string name="title_activity_config">ConfigActivity</string>
 
 </resources>

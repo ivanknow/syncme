@@ -57,6 +57,14 @@ public class TextActivity extends Activity {
 		gtTask.execute();
 	}
 
+	  public void sendText(View v){
+	    	Intent i = new Intent();
+	    	i.setAction(Intent.ACTION_SEND);
+	    	i.putExtra(Intent.EXTRA_TEXT,text.getText().toString());
+	    	i.setType("text/plain");
+	    	startActivity(Intent.createChooser(i,"Escolha as opções"));
+	    	
+	    }
 	public void updateText(View v) {
 		UpdateTextTask utTask = new UpdateTextTask();
 		utTask.setContext(getApplicationContext());
@@ -64,7 +72,7 @@ public class TextActivity extends Activity {
 	}
 
 	class LogoutTask extends AsyncTask<String, String, String> {
-		String result = "...";
+		String result = "Error";
 
 		private Context context;
 

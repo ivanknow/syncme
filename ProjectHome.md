@@ -1,0 +1,3 @@
+Atualmente estamos conectados a internet por vários dispositivos ao mesmo tempo e muitas vezes precisamos trocar informações entre eles. Por exemplo, quando você recebe um link no twitter ou whatsapp e deseja abrir no navegador ou quando você recebe um número de telefone ou e-mail via facebook ou IM e deseja ter essa informação no smartphone. A ideia desse aplicativo é criar uma forma simples de troca de texto sem a necessidade de salvar ou mandar e-mails desnecessários.
+
+O projeto está sendo desenvolvido na disciplina de Tópicos Avançados Em Sistemas Distribuidos 1 sob a Orientação do Professor Fernando Aires

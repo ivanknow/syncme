@@ -7,6 +7,8 @@
 <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/Values.js"></script>
+<script type="text/javascript" src="js/TextController.js"></script>
 <!-- inclusao do css -->
 
 <style type="text/css">
@@ -33,112 +35,5 @@ html,body,form,#main { height:92%; }
 </form>
 </div>
 
-<script type="text/javascript">
-
-var ScreenController = {
-		module:"syncme",
-		listener:"ProfileListener.php",
-		
-		init:function(){
-	
-			
-
-		},
-		
-		checkLogin:function(){
-			$.ajax({
-				type:"POST",
-				dataType:"json",
-				url:ScreenController.module+"/"+ScreenController.listener,
-				data:"opt=CHECK_LOGIN", 
-				success: function(response) {
-					if(response.error!=0  && response.error!=undefined){
-						alert(response.msgError);
-						window.location = "index.html";
-						
-					}
-					
-				}
-			});
-		},
-		
-		getText:function(){
-			$.ajax({
-				type:"POST",
-				dataType:"json",
-				url:ScreenController.module+"/"+ScreenController.listener,
-				data:"opt=GET_TEXT", 
-				success: function(response) {
-					
-					if(response.error!=0  && response.error!=undefined){
-						alert(response.msgError);
-						window.location = "index.html";
-						
-					}else{
-						$("#text").val(response.text);
-						$("#id").val(response.id);
-						
-					}
-				}
-			});
-		},
-		
-		updateText:function(){
-			$.ajax({
-				type:"POST",
-				dataType:"json",
-				url:ScreenController.module+"/"+ScreenController.listener,
-				data:$('#target').serialize(), 
-				success: function(response) {
-					
-					if(response.error!=0  && response.error!=undefined){
-						alert(response.msgError);
-					}else{
-						alert(response.msg);
-					}
-				}
-			});
-		}
-};
-
-ScreenController.init();
-
-$(function(){
-	ScreenController.getText();
-	
-	$(".signout").click(function(){
-		
-		$.ajax({
-			type:"POST",
-			dataType:"json",
-			url:ScreenController.module+"/"+ScreenController.listener,
-			data:"opt=LOGOUT", 
-			success: function(response) {
-				window.location = "index.html";
-			}
-		});
-	});
-	
-$(".gettext").click(function(){
-		
-	ScreenController.getText();
-	
-	});
-	
-$(".updatetext").click(function(){
-		
-	ScreenController.updateText();
-	
-	});
-	
-	
-	
-	$( "#target" ).submit(function( event ) {
-		event.preventDefault();
-		});
-
-});
-	
-</script>
 </body>
 </html>

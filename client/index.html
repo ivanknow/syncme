@@ -7,6 +7,8 @@
 <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/Values.js"></script>
+<script type="text/javascript" src="js/LoginController.js"></script>
 <!-- inclusao do css -->
 
 <style type="text/css">
@@ -43,49 +45,5 @@ html,body,#main { height:100%; }
     <a href="signup.html">SIGN UP</a>
 </div>
 
-
-<script type="text/javascript">
-
-var ScreenController = {
-		module:"syncme",
-		listener:"ProfileListener.php",
-		
-		init:function(){
-	
-			
-
-		}
-};
-
-ScreenController.init();
-
-$(function(){
-	$( "#target" ).submit(function( event ) {
-		
-		var test = $("#target").valid();
-
-		if(test){
-		$.ajax({
-			type:"POST",
-			dataType:"json",
-			url:ScreenController.module+"/"+ScreenController.listener,
-			data:$('#target').serialize(), 
-			success: function(response) {
-				
-				if(response.error!=0  && response.error!=undefined){
-					alert(response.msgError);
-					
-				}else{
-					window.location = "text.html";
-			    }
-			}
-		});
-		}
-		
-		event.preventDefault();
-		});
-});
-	
-</script>
 </body>
 </html>
